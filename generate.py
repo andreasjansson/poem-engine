@@ -67,13 +67,13 @@ def order_sentences(smap):
         if all([x[-1] == last for x in v]):
             del smap[k]
         else:
-            v.remove(s)
-            s2 = s
-            while s2[-1] == s[-1]:
-                s2 = random.choice(list(v))
+            v = {x for x in v if x[-1] != s[-1]}
+            s2 = random.choice(list(v))
             sentences += [s, s2]
-            v.remove(s2)
-            if not v:
+            v = {x for x in v if x[-1] != s2[-1]}
+            if v:
+                smap[k] = v
+            else:
                 del smap[k]
 
     ordered = []
